@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connexion - ESB Santé</title>
+    <style>
+        :root {
+            --primary-color:  #04A4CC;
+            --secondary-color:  #055c71;
+            --accent-color: #e6f0ff;
+            --text-color: #333;
+            --light-gray: #f5f5f5;
+            --white: #ffffff;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background-color: var(--light-gray);
+            color: var(--text-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+        
+        .login-container {
+            background-color: var(--white);
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+            width: 90%;
+            max-width: 480px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .login-header {
+            background-color: var(--primary-color);
+            color: var(--white);
+            padding: 2rem;
+            text-align: center;
+        }
+        
+        .login-header h1 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .login-header p {
+            opacity: 0.9;
+        }
+        
+        .login-body {
+            padding: 2rem;
+        }
+        
+        .user-selector {
+            display: flex;
+            margin-bottom: 2rem;
+            border-radius: 12px;
+            overflow: hidden;
+            background-color: var(--accent-color);
+        }
+        
+        .user-option {
+            flex: 1;
+            padding: 1rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            background: transparent;
+            font-weight: 600;
+            color: var(--primary-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .user-option:hover {
+            background-color: rgba(0, 86, 179, 0.1);
+        }
+        
+        .user-option.active {
+            background-color: var(--primary-color);
+            color: var(--white);
+        }
+        
+        .user-option i {
+            font-size: 1.5rem;
+        }
+        
+        .login-form {
+            display: none;
+            animation: fadeIn 0.4s ease-out;
+        }
+        
+        .login-form.active {
+            display: block;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--text-color);
+        }
+        
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border 0.3s;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(0, 86, 179, 0.2);
+        }
+        
+        .submit-btn {
+            width: 100%;
+            padding: 1rem;
+            background-color: var(--primary-color);
+            color: var(--white);
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 0.5rem;
+        }
+        
+        .submit-btn:hover {
+            background-color: var(--secondary-color);
+        }
+        
+        .forgot-password {
+            text-align: center;
+            margin-top: 1rem;
+        }
+        
+        .forgot-password a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+        
+        .forgot-password a:hover {
+            text-decoration: underline;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .login-container {
+                width: 95%;
+            }
+            
+            .login-header {
+                padding: 1.5rem;
+            }
+            
+            .login-body {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-header">
+            <h1>ESB Santé</h1>
+            <p>Service médical universitaire</p>
+        </div>
+        
+        <div class="login-body">
+            <div class="user-selector">
+                <button class="user-option active" onclick="showForm('student')">
+                    <i class="fas fa-user-graduate"></i>
+                    Étudiant
+                </button>
+                <button class="user-option" onclick="showForm('doctor')">
+                    <i class="fas fa-user-md"></i>
+                    Médecin
+                </button>
+            </div>
+            
+            <form id="student-form" class="login-form active">
+                <div class="form-group">
+                    <label for="student-email">Email universitaire</label>
+                    <input type="email" id="student-email" placeholder="prenom.nom@etu.esb.edu" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="student-password">Mot de passe</label>
+                    <input type="password" id="student-password" placeholder="••••••••" required>
+                </div>
+                
+                <button type="submit" class="submit-btn">Se connecter</button>
+                
+                <div class="forgot-password">
+                    <a href="#">Mot de passe oublié ?</a>
+                </div>
+            </form>
+            
+            <form id="doctor-form" class="login-form">
+                <div class="form-group">
+                    <label for="doctor-email">Email professionnel</label>
+                    <input type="email" id="doctor-email" placeholder="prenom.nom@esb-sante.edu" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="doctor-password">Mot de passe</label>
+                    <input type="password" id="doctor-password" placeholder="••••••••" required>
+                </div>
+                
+          
+                
+                <button type="submit" class="submit-btn">Se connecter</button>
+                
+                <div class="forgot-password">
+                    <a href="#">Mot de passe oublié ?</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function showForm(formType) {
+            // Mettre à jour les boutons
+            document.querySelectorAll('.user-option').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.currentTarget.classList.add('active');
+            
+            // Basculer entre les formulaires
+            document.querySelectorAll('.login-form').forEach(form => {
+                form.classList.remove('active');
+            });
+            document.getElementById(formType + '-form').classList.add('active');
+        }
+        
+        // Gestion de la soumission des formulaires
+        document.getElementById('student-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            // Ici vous ajouteriez la logique de connexion étudiant
+            console.log('Connexion étudiant soumise');
+        });
+        
+        document.getElementById('doctor-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            // Ici vous ajouteriez la logique de connexion médecin
+            console.log('Connexion médecin soumise');
+        });
+    </script>
+</body>
+</html>
